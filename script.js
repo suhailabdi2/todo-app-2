@@ -1,8 +1,23 @@
 const addButton= document.querySelector('.add-task-button');
 const taskInput = document.querySelector('#new-task');
 const taskList= document.querySelector('.task-list');
+const taskCounter= document.querySelector('.counts');
+const countDisplayer= document.createElement("p");
+const completedFilters=document.querySelector("#show-completed");
+const pendingFilter=document.querySelector("#show-pending");
+const showAll = document.querySelector("#show-all");
 let tasks=[];
+let taskedCounts=0; 
+let completedCounts =0;
 let count =0;
+function countTasks(){
+    for(let i=0;i<=tasks.length-1;i++){
+        taskedCounts++;
+    }
+    countDisplayer.innerHTML=`Total tasks:${taskedCounts} Completed tasks: ${completedCounts}`;
+    taskCounter.appendChild(countDisplayer);
+    console.log(`Total tasks:${taskedCounts} Completed tasks: ${completedCounts}`)
+}
 function renderTask(t){
     const editButton=document.createElement("button");
     editButton.innerHTML="✏️";
@@ -52,7 +67,8 @@ function renderTask(t){
         li.remove();
         console.log(tasks);
         taskInput.value="";
-        localStorage.setItem("tasks",JSON.stringify(tasks));    
+        localStorage.setItem("tasks",JSON.stringify(tasks));
+            
     }) 
     editButton.addEventListener("click",function(){
         let newValue = prompt("Enter updated task")
@@ -61,6 +77,19 @@ function renderTask(t){
         localStorage.setItem("tasks",JSON.stringify(tasks));
         console.log(tasks)
     })
+    completedFilters.addEventListener("click",function(){
+        taskList.innerHTML="";
+        filterTasks(true);
+    });
+    pendingFilter.addEventListener("click",function(){
+        taskList.innerHTML="";
+        filterTasks(false);
+    })
+    showAll.addEventListener("click",function(){
+       taskList.innerHTML="";
+        tasks.map(task=>renderTask(task));
+    })
+
 }
 function addTask(v){
     let myt = {
@@ -73,8 +102,14 @@ function addTask(v){
 }
 window.addEventListener("DOMContentLoaded",function(){
     tasks=JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.map(task=> renderTask(task))
+    tasks.map(task=> renderTask(task));
 })
+function filterTasks(filter){
+    let filteredTasks= tasks.filter(t => t.completed==filter);
+    filteredTasks.map(task => renderTask(task));
+}
+
+pendingFilter
 addButton.addEventListener("click",function(e){
     if(taskInput.value===""){
         alert("Please Enter something in the task bar")

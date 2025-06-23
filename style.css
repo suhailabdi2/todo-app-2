@@ -121,7 +121,12 @@ label {
 .task-list li button:hover {
   background: #dc2626;
 }
-
+.filters{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
 @media (max-width: 500px) {
   label, .task-list {
     max-width: 95vw;

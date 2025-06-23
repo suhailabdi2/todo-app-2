@@ -12,8 +12,16 @@
         <input type="text" name="new-task" id="new-task" placeholder="Enter a new Task Here" required>
         <button class="add-task-button">Add Task</button>
         <ul class="task-list">
-            
+
         </ul>
+        <div class="filters">
+            <input type="radio" id="show-completed" name="filters">
+            <label for="show-completed">Show Completed</label>
+            <input type="radio" id="show-pending" name="filters">
+            <label for="show-pending">Show Pending</label>
+            <input type="radio" id="show-all" name="filters">
+            <label for="show-all">Show All</label>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
