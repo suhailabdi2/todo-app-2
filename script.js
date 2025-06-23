@@ -4,6 +4,7 @@ const taskList= document.querySelector('.task-list');
 let tasks=[];
 let count =0;
 function renderTask(t){
+    
     const li = document.createElement("li");
     const deleteButton= document.createElement("button");
     const checkbox= document.createElement("input");
@@ -13,23 +14,24 @@ function renderTask(t){
     const span= document.createElement("span");
     const p = document.createElement("p");
     li.appendChild(span);
-    p.textContent= t.trim();
+    p.textContent= t.text.trim();
     span.appendChild(p);
     span.appendChild(checkbox); 
     console.log(tasks);
     taskList.appendChild(li);
     span.appendChild(deleteButton);
+    
     checkbox.addEventListener("change",function(){
         console.log("task",tasks);
-        let t=tasks.findIndex(i=> i.id==li.getAttribute("count"))
-        if(tasks[t].completed){
+        let v=tasks.findIndex(i=> i.id==t.id);
+        if(tasks[v].completed){
             p.style.textDecoration="none";
             p.style.fontWeight="normal";
-            tasks[t].completed=false;
+            tasks[v].completed=false;
             console.log(li.getAttribute("count"));
         }else{
             console.log("change");
-            tasks[t].completed=true;
+            tasks[v].completed=true;
             p.style.textDecoration="line-through";
             p.style.fontWeight="100";
         }
@@ -37,11 +39,11 @@ function renderTask(t){
         console.log(tasks);
     })
     li.setAttribute("count",count);
-    count++;
+    
     taskInput.value="";
     localStorage.setItem("tasks",JSON.stringify(tasks));
     deleteButton.addEventListener("click",function(){
-        tasks=tasks.filter(item => item.id != li.getAttribute("count"));
+        tasks=tasks.filter(item => item.id != t.id);
         li.remove();
         console.log(tasks);
         taskInput.value="";
@@ -49,16 +51,18 @@ function renderTask(t){
     }) 
 }
 function addTask(v){
-    tasks.push({
-        id:count,
+    let myt = {
+        id:tasks.length || 0,
         text:v,
         completed:false
-    })
-    renderTask(v);      
+    }
+    tasks.push(myt)
+
+    renderTask(myt);      
 }
 window.addEventListener("DOMContentLoaded",function(){
-    tasks=JSON.parse(localStorage.getItem("tasks"))
-    tasks.map(task=> renderTask(task.text))
+    tasks=JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.map(task=> renderTask(task))
 })
 addButton.addEventListener("click",function(e){
     if(taskInput.value===""){
