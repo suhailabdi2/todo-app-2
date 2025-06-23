@@ -25,14 +25,17 @@ function addTask(){
         completed:false
     }   
     )
-    checkbox.addEventListener("change",function(e){
-        if(tasks.at(li.getAttribute("count")).completed){
+    checkbox.addEventListener("change",function(){
+        console.log("task",tasks);
+        let t=tasks.findIndex(i=> i.id==li.getAttribute("count"))
+        if(tasks[t].completed){
             p.style.textDecoration="none";
             p.style.fontWeight="normal";
-            tasks.at(li.getAttribute("count")).completed=false;
+            tasks[t].completed=false;
             console.log(li.getAttribute("count"));
         }else{
-            tasks.at(li.getAttribute("count")).completed=true;
+            console.log("change");
+            tasks[t].completed=true;
             p.style.textDecoration="line-through";
             p.style.fontWeight="100";
         }
@@ -48,11 +51,11 @@ function addTask(){
         li.remove();
         console.log(tasks);
         taskInput.value="";
-
         localStorage.setItem("tasks",JSON.stringify(tasks));    
     })
     window.addEventListener("DOMContentLoaded",function(){
-        tasks=JSON.parse(this.localStorage.getItem("tasks"));
+       let tasks=JSON.parse(localStorage.getItem("tasks"));
+       console.log(tasks);
         tasks.map(task => taskList.innerHTML=`
             <li count=${task.id}><span><p>${task.text}</p><input type="checkbox"><button>🗑️</button></span></li>
             `).join("");
