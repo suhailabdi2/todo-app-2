@@ -4,7 +4,8 @@ const taskList= document.querySelector('.task-list');
 let tasks=[];
 let count =0;
 function renderTask(t){
-    
+    const editButton=document.createElement("button");
+    editButton.innerHTML="✏️";
     const li = document.createElement("li");
     const deleteButton= document.createElement("button");
     const checkbox= document.createElement("input");
@@ -20,6 +21,7 @@ function renderTask(t){
     console.log(tasks);
     taskList.appendChild(li);
     span.appendChild(deleteButton);
+    span.appendChild(editButton);
     if(t.completed){
         p.style.textDecoration="line-through";
         p.style.fontWeight="100";
@@ -52,6 +54,13 @@ function renderTask(t){
         taskInput.value="";
         localStorage.setItem("tasks",JSON.stringify(tasks));    
     }) 
+    editButton.addEventListener("click",function(){
+        let newValue = prompt("Enter updated task")
+        t.text= newValue;
+        p.innerHTML=t.text;
+        localStorage.setItem("tasks",JSON.stringify(tasks));
+        console.log(tasks)
+    })
 }
 function addTask(v){
     let myt = {
