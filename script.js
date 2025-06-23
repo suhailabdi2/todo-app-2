@@ -20,7 +20,11 @@ function renderTask(t){
     console.log(tasks);
     taskList.appendChild(li);
     span.appendChild(deleteButton);
-    
+    if(t.completed){
+        p.style.textDecoration="line-through";
+        p.style.fontWeight="100";
+        checkbox.checked=true;
+    }
     checkbox.addEventListener("change",function(){
         console.log("task",tasks);
         let v=tasks.findIndex(i=> i.id==t.id);
@@ -39,7 +43,6 @@ function renderTask(t){
         console.log(tasks);
     })
     li.setAttribute("count",count);
-    
     taskInput.value="";
     localStorage.setItem("tasks",JSON.stringify(tasks));
     deleteButton.addEventListener("click",function(){
@@ -57,7 +60,6 @@ function addTask(v){
         completed:false
     }
     tasks.push(myt)
-
     renderTask(myt);      
 }
 window.addEventListener("DOMContentLoaded",function(){
