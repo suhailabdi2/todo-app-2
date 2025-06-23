@@ -3,7 +3,7 @@ const taskInput = document.querySelector('#new-task');
 const taskList= document.querySelector('.task-list');
 let tasks=[];
 let count =0;
-function addTask(){
+function renderTask(t){
     const li = document.createElement("li");
     const deleteButton= document.createElement("button");
     const checkbox= document.createElement("input");
@@ -13,18 +13,12 @@ function addTask(){
     const span= document.createElement("span");
     const p = document.createElement("p");
     li.appendChild(span);
-    p.textContent= taskInput.value.trim();
+    p.textContent= t.trim();
     span.appendChild(p);
     span.appendChild(checkbox); 
     console.log(tasks);
     taskList.appendChild(li);
     span.appendChild(deleteButton);
-    tasks.push({
-        id:count,
-        text:taskInput.value,
-        completed:false
-    }   
-    )
     checkbox.addEventListener("change",function(){
         console.log("task",tasks);
         let t=tasks.findIndex(i=> i.id==li.getAttribute("count"))
@@ -52,21 +46,25 @@ function addTask(){
         console.log(tasks);
         taskInput.value="";
         localStorage.setItem("tasks",JSON.stringify(tasks));    
-    })
-    window.addEventListener("DOMContentLoaded",function(){
-       let tasks=JSON.parse(localStorage.getItem("tasks"));
-       console.log(tasks);
-        tasks.map(task => taskList.innerHTML=`
-            <li count=${task.id}><span><p>${task.text}</p><input type="checkbox"><button>🗑️</button></span></li>
-            `).join("");
-        console.log("window loaded");
-    })
+    }) 
 }
+function addTask(v){
+    tasks.push({
+        id:count,
+        text:v,
+        completed:false
+    })
+    renderTask(v);      
+}
+window.addEventListener("DOMContentLoaded",function(){
+    tasks=JSON.parse(localStorage.getItem("tasks"))
+    tasks.map(task=> renderTask(task.text))
+})
 addButton.addEventListener("click",function(e){
     if(taskInput.value===""){
         alert("Please Enter something in the task bar")
     }else{
-        addTask();
+        addTask(taskInput.value.trim());
     }
 });
 taskInput.addEventListener("keypress",function(e){
