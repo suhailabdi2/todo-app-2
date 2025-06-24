@@ -78,7 +78,7 @@ function renderTask(t){
     }) 
     editButton.addEventListener("click",function(){
         let newValue = prompt("Enter updated task")
-        t.text= newValue;
+        t.todo= newValue;
         p.innerHTML=t.todo;
         localStorage.setItem("tasks",JSON.stringify(tasks));
         console.log(tasks)
