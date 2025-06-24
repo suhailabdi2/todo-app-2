@@ -170,7 +170,7 @@ label[for="new-task"] {
   color: #6366f1;
   background: transparent;
   cursor: pointer;
-  transition: background 0.5, color 0.1s;
+  transition: background 1.5s, color 1.5s;
   user-select: none;
   border-radius: 8px;
 }

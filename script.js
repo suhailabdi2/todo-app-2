@@ -108,7 +108,7 @@ window.addEventListener("DOMContentLoaded",function(){
 })
 
 
-pendingFilter
+
 addButton.addEventListener("click",function(e){
     if(taskInput.value===""){
         alert("Please Enter something in the task bar")
