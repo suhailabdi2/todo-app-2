@@ -100,22 +100,32 @@ function renderTask(t){
     }
     
 }
-function addTask(v){
-    let d8= new Date();
+async function addTask(v){
     let myt = {
         id:tasks.length || 0,
         todo:v,
         completed:false,
+        userId:ran
     }
-    tasks.push(myt)
-    renderTask(myt);      
-}
+    tasks.push(myt);
+    let response=await fetch('https://dummyjson.com/todos/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            todo: v,
+            completed: false,
+            userId: 5,
+         })
+        })
+    let data= await response.json
+    tasks.map(task => renderTask(task));
+    }
 //function to get the data
 window.addEventListener("DOMContentLoaded",function(){
     //tasks=JSON.parse(localStorage.getItem("tasks")) || [];
     //tasks.map(task=> renderTask(task));
     async function getTodos(){
-        const response= await fetch('https://dummyjson.com/todos')
+        const response= await fetch('https://dummyjson.com/todos?limit=4&skip=3')
         const data= await response.json();
         tasks= data.todos;
         console.log(tasks);
@@ -123,7 +133,6 @@ window.addEventListener("DOMContentLoaded",function(){
     }
     getTodos()
     console.log(tasks);
-    
 })
 addButton.addEventListener("click",function(e){
     if(taskInput.value===""){
