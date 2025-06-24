@@ -202,3 +202,24 @@ label[for="new-task"] {
     max-width: 98vw;
   }
 }
+.task-description {
+  font-size: 0.9rem;
+  color: #4a5568;
+  margin-top: 4px;
+  background-color: #22223b;
+  padding: 12px 16px;
+  border-radius: 8px;
+  height: 100vh;
+  width: 100%;
+  transition: background 1.5s, color 1.5s, width 2.5s;
+  display: none;
+}
+.task-header{
+  display: flex;
+  justify-content: space-between;
+}
+.close-task-button{
+  padding: 17px;
+  background-color: #f87171;
+  outline: none;
+}

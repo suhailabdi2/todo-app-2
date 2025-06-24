@@ -6,6 +6,9 @@ const countDisplayer= document.createElement("p");
 const completedFilters=document.querySelector("#show-completed");
 const pendingFilter=document.querySelector("#show-pending");
 const showAll = document.querySelector("#show-all");
+const taskDescription=document.querySelector(".task-description");
+const taskTitle=document.querySelector(".task-title");
+const closeButton=document.querySelector(".close-task-button")
 let tasks=[];
 let taskedCounts=0; 
 let completedCounts =0;
@@ -42,6 +45,10 @@ function renderTask(t){
         p.style.fontWeight="100";
         checkbox.checked=true;
     }
+    span.addEventListener("click",function(){
+        taskDescription.style.display="block";
+        taskTitle.innerHTML=`${t.text}`;
+    })
     checkbox.addEventListener("change",function(){
         console.log("task",tasks);
         let v=tasks.findIndex(i=> i.id==t.id);
@@ -121,4 +128,7 @@ taskInput.addEventListener("keypress",function(e){
         e.preventDefault();
         addButton.click();
     }
+})
+closeButton.addEventListener("click",function(){
+    taskDescription.style.display="none";
 })
