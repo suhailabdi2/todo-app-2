@@ -78,18 +78,22 @@ function renderTask(t){
         console.log(tasks)
     })
     completedFilters.addEventListener("click",function(){
-        taskList.innerHTML="";
+        
         filterTasks(true);
     });
     pendingFilter.addEventListener("click",function(){
-        taskList.innerHTML="";
+        
         filterTasks(false);
     })
     showAll.addEventListener("click",function(){
-       taskList.innerHTML="";
+        taskList.innerHTML="";
         tasks.map(task=>renderTask(task));
     })
-
+    function filterTasks(filter){
+        taskList.innerHTML="";
+        let filteredTasks= tasks.filter(t => t.completed==filter);
+        filteredTasks.map(task => renderTask(task));
+}
 }
 function addTask(v){
     let myt = {
@@ -104,10 +108,7 @@ window.addEventListener("DOMContentLoaded",function(){
     tasks=JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.map(task=> renderTask(task));
 })
-function filterTasks(filter){
-    let filteredTasks= tasks.filter(t => t.completed==filter);
-    filteredTasks.map(task => renderTask(task));
-}
+
 
 pendingFilter
 addButton.addEventListener("click",function(e){
