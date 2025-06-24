@@ -203,23 +203,20 @@ label[for="new-task"] {
   }
 }
 .task-description {
+  position: fixed;
   font-size: 0.9rem;
-  color: #4a5568;
   margin-top: 4px;
-  background-color: #22223b;
+  background-color: #f1f1f1;
   padding: 12px 16px;
   border-radius: 8px;
-  height: 100vh;
-  width: 100%;
+  height: 50vh;
+  width: 45vw;
   transition: background 1.5s, color 1.5s, width 2.5s;
   display: none;
+  backdrop-filter: blur(4px);
 }
-.task-header{
-  display: flex;
-  justify-content: space-between;
-}
-.close-task-button{
-  padding: 17px;
-  background-color: #f87171;
-  outline: none;
+
+.task-title{
+  font-family:"Atkinson Hyperlegible Mono", sans-serif;
+  font-size: 3rem ;
 }

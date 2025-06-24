@@ -8,7 +8,9 @@ const pendingFilter=document.querySelector("#show-pending");
 const showAll = document.querySelector("#show-all");
 const taskDescription=document.querySelector(".task-description");
 const taskTitle=document.querySelector(".task-title");
-const closeButton=document.querySelector(".close-task-button")
+const closeButton=document.querySelector(".close-task-button");
+const taskStatus=document.querySelector(".task-status");
+const taskDate=document.querySelector(".task-date");
 let tasks=[];
 let taskedCounts=0; 
 let completedCounts =0;
@@ -45,10 +47,7 @@ function renderTask(t){
         p.style.fontWeight="100";
         checkbox.checked=true;
     }
-    span.addEventListener("click",function(){
-        taskDescription.style.display="block";
-        taskTitle.innerHTML=`${t.text}`;
-    })
+    
     checkbox.addEventListener("change",function(){
         console.log("task",tasks);
         let v=tasks.findIndex(i=> i.id==t.id);
@@ -67,7 +66,7 @@ function renderTask(t){
         console.log(tasks);
     })
     li.setAttribute("count",count);
-    taskInput.value="";
+    taskInput.value="   ";
     localStorage.setItem("tasks",JSON.stringify(tasks));
     deleteButton.addEventListener("click",function(){
         tasks=tasks.filter(item => item.id != t.id);
@@ -97,14 +96,17 @@ function renderTask(t){
     function filterTasks(filter){
         taskList.innerHTML="";
         let filteredTasks= tasks.filter(t => t.completed==filter);
-        filteredTasks.map(task => renderTask(task));
-}
+        filteredTasks.map(task => renderTask(task));  
+    }
+    
 }
 function addTask(v){
+    let d8= new Date();
     let myt = {
         id:tasks.length || 0,
         text:v,
-        completed:false
+        completed:false,
+        date: d8.toLocaleDateString()
     }
     tasks.push(myt)
     renderTask(myt);      
@@ -113,9 +115,6 @@ window.addEventListener("DOMContentLoaded",function(){
     tasks=JSON.parse(localStorage.getItem("tasks")) || [];
     tasks.map(task=> renderTask(task));
 })
-
-
-
 addButton.addEventListener("click",function(e){
     if(taskInput.value===""){
         alert("Please Enter something in the task bar")
@@ -128,7 +127,4 @@ taskInput.addEventListener("keypress",function(e){
         e.preventDefault();
         addButton.click();
     }
-})
-closeButton.addEventListener("click",function(){
-    taskDescription.style.display="none";
 })
