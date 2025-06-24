@@ -78,11 +78,9 @@ function renderTask(t){
         console.log(tasks)
     })
     completedFilters.addEventListener("click",function(){
-        
         filterTasks(true);
     });
     pendingFilter.addEventListener("click",function(){
-        
         filterTasks(false);
     })
     showAll.addEventListener("click",function(){
