@@ -35,7 +35,7 @@ function renderTask(t){
     const span= document.createElement("span");
     const p = document.createElement("p");
     li.appendChild(span);
-    p.textContent= t.text.trim();
+    p.textContent= t.todo.trim();
     span.appendChild(p);
     span.appendChild(checkbox); 
     console.log(tasks);
@@ -79,7 +79,7 @@ function renderTask(t){
     editButton.addEventListener("click",function(){
         let newValue = prompt("Enter updated task")
         t.text= newValue;
-        p.innerHTML=t.text;
+        p.innerHTML=t.todo;
         localStorage.setItem("tasks",JSON.stringify(tasks));
         console.log(tasks)
     })
@@ -104,27 +104,39 @@ function addTask(v){
     let d8= new Date();
     let myt = {
         id:tasks.length || 0,
-        text:v,
+        todo:v,
         completed:false,
-        date: d8.toLocaleDateString()
     }
     tasks.push(myt)
     renderTask(myt);      
 }
+//function to get the data
 window.addEventListener("DOMContentLoaded",function(){
-    tasks=JSON.parse(localStorage.getItem("tasks")) || [];
-    tasks.map(task=> renderTask(task));
+    //tasks=JSON.parse(localStorage.getItem("tasks")) || [];
+    //tasks.map(task=> renderTask(task));
+    async function getTodos(){
+        const response= await fetch('https://dummyjson.com/todos')
+        const data= await response.json();
+        tasks= data.todos;
+        console.log(tasks);
+        tasks.map(task=> renderTask(task));
+    }
+    getTodos()
+    console.log(tasks);
+    
 })
 addButton.addEventListener("click",function(e){
     if(taskInput.value===""){
-        alert("Please Enter something in the task bar")
+        alert("Please Enter something in the task bar")// adding a task
     }else{
         addTask(taskInput.value.trim());
     }
 });
 taskInput.addEventListener("keypress",function(e){
     if(e.key =="Enter"){
-        e.preventDefault();
+        e.preventDefault();// function for enter button
         addButton.click();
     }
 })
+
+
